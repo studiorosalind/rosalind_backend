@@ -1,0 +1,51 @@
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+*.prefs
+target/
+tmp
+project/
+.gradle/
+out
+.metadata
+Servers
+atlassian-ide-plugin.xml
+*~
+rebel.xml
+buildSrc/
+db-migration/
+contiperf-report/
+bin/
+.DS_Store
+generated/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### Generated ###
+classes/
+
+### Logs ###
+/logs
+
+/LOG_FILE_IS_UNDEFINED/
+/LOG_PATH_IS_UNDEFINED/
