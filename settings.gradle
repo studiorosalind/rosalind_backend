@@ -1,0 +1,3 @@
+rootProject.name = 'rosalind-backend'
+include 'rosalind-common'
+include 'rosalind-api'

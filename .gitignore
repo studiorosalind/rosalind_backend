@@ -1,23 +1,9 @@
+HELP.md
 .gradle
-/build/
+build/
 !gradle/wrapper/gradle-wrapper.jar
-*.prefs
-target/
-tmp
-project/
-.gradle/
-out
-.metadata
-Servers
-atlassian-ide-plugin.xml
-*~
-rebel.xml
-buildSrc/
-db-migration/
-contiperf-report/
-bin/
-.DS_Store
-generated/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### STS ###
 .apt_generated
@@ -26,26 +12,33 @@ generated/
 .project
 .settings
 .springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
 ### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
-### Generated ###
-classes/
+### VS Code ###
+.vscode/
 
 ### Logs ###
-/logs
+*.log
+logs/
 
-/LOG_FILE_IS_UNDEFINED/
-/LOG_PATH_IS_UNDEFINED/
+### OS specific ###
+.DS_Store

@@ -1,0 +1,42 @@
+//plugins {
+//    id 'org.springframework.boot' version '2.6.7'
+//    id 'java'
+//}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+
+dependencies {
+    // Dependency on rosalind-common module
+    implementation project(':rosalind-common')
+    
+    // Spring Web for REST controllers
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    
+    // Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    
+    // JWT for authentication
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    
+    // Lombok for reducing boilerplate code
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    
+    // Dev tools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+}
+
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = true
+}

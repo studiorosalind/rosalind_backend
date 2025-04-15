@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.7'
+    }
+}
+
+allprojects {
+    group = 'com.rosalind'
+    version = '0.0.1-SNAPSHOT'
+    
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+    
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.boot:spring-boot-dependencies:2.6.7'
+        }
+    }
+    
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+    
+    test {
+        useJUnitPlatform()
+    }
+}
