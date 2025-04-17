@@ -1,19 +1,90 @@
-plugins {
-    id 'java-library'
+apply plugin: "java"
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
+group 'com.rosalind'
+version '0.0.1-SNAPSHOT'
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
-    // Spring Data JPA
-    api 'org.springframework.boot:spring-boot-starter-data-jpa'
-    api "org.springframework.cloud:spring-cloud-starter-bootstrap"
 
-    // PostgreSQL Driver
-    runtimeOnly 'org.postgresql:postgresql'
-    
-    // Lombok for reducing boilerplate code
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    
-    // Validation
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("com.querydsl:querydsl-core:${queryDslVersion}")
+    implementation("com.querydsl:querydsl-jpa:${queryDslVersion}")
+    implementation("com.querydsl:querydsl-apt:${queryDslVersion}")
+    implementation("com.querydsl:querydsl-sql-spatial:${queryDslVersion}")
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+    // persistence
+    implementation 'org.postgresql:postgresql'
+
+    // aws
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.675'
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-sts', version: '1.11.675'
+
+    // Slack
+    implementation group: 'com.slack.api', name: 'slack-api-client', version: '1.26.1'
+
+    // common utils
+    implementation 'com.google.guava:guava:22.0'
+    implementation 'org.apache.commons:commons-lang3:3.9'
+    implementation group: 'org.apache.commons', name: 'commons-text', version: '1.8'
+    implementation 'commons-fileupload:commons-fileupload:1.4'
+
+    implementation 'com.google.firebase:firebase-admin:9.1.1'
+
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    implementation 'software.amazon.awssdk:rekognition:2.17.230'
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def querydslSrcDir = 'src/main/generated'
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java',querydslSrcDir,'build/generated/sources/annotationProcessor/java/main']
+        }
+    }
+}
+
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
 }

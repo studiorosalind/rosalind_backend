@@ -1,41 +1,89 @@
 buildscript {
     repositories {
-        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
-    dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.7'
-    }
-}
 
-allprojects {
-    group = 'com.rosalind'
-    version = '0.0.1-SNAPSHOT'
-    
-    repositories {
-        mavenCentral()
+    ext {
+        javaVersion="11"
+        javaEncoding="UTF-8"
+        springCloudVersion="2020.0.5"
+        springBootVersion="2.5.12"
+        queryDslPluginVersion="1.0.10"
+        dependencyManagementVersion='1.0.11.RELEASE'
+        queryDslVersion='4.4.0'
+        jibGradlePluginVersion="3.1.4"
     }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
+        classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${queryDslPluginVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
+
+        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:${jibGradlePluginVersion}"
+    }
+
 }
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-    
-    sourceCompatibility = '11'
-    targetCompatibility = '11'
-    
-    dependencyManagement {
-        imports {
-            mavenBom("org.springframework.cloud:spring-cloud-dependencies:2021.0.5")
-            mavenBom 'org.springframework.boot:spring-boot-dependencies:2.6.7'
+
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://packages.confluent.io/maven/"
         }
     }
-    
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    project.group = 'com.rosalind'
+    project.version = '0.0.1-SNAPSHOT'
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    compileJava.dependsOn(processResources)
+    [compileJava, compileTestJava]*.options*.encoding = javaEncoding
+
+    task initSourceFolders {
+        sourceSets*.java.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+
+        sourceSets*.resources.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
     }
-    
-    test {
-        useJUnitPlatform()
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        }
+    }
+    dependencies {
+        implementation 'org.codehaus.groovy:groovy-all:3.0.9'
+        implementation 'cglib:cglib-nodep:3.2.4'
+        implementation "org.projectlombok:lombok:1.18.20"
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+        implementation group: 'commons-codec', name: 'commons-codec', version: '1.13'
+        implementation 'net.javacrumbs.shedlock:shedlock-spring:4.14.0'
+        implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:4.14.0'
+
+        // slack - boot 간 버전충돌
+        implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
+        testImplementation 'junit:junit:4.12'
+        testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
+        testImplementation 'org.spockframework:spock-spring:2.3-groovy-3.0'
     }
 }
