@@ -1,6 +1,7 @@
 package com.rosalind.api.configuration;
 
-import com.rosalind.configuration.security.RosalindAuthenticationEntryPoint;
+import com.rosalind.configuration.security.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,13 +12,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalAuthentication
 @ComponentScan("com.rosalind.api")
+@RequiredArgsConstructor
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
+  private final MessageService messageService;
+  private final TokenProvider tokenProvider;
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
@@ -45,13 +52,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
       ).permitAll()
       .antMatchers(
         "/error**",
-        "/hello",
-        "/web-api/outbound-batch/**/rebatch-dashboard",
-        "/actuator/**",
-        //Todo proxy 다 걷어 낼 때 삭제 예정
-        "/api/proxy/**"
+        "/hello/**",
+        "/actuator/**"
       ).permitAll()
-      .anyRequest().access("@sugarAuthorizationChecker.check(request, authentication)")
+      .anyRequest().access("@rosalindAuthorizationChecker.check(request, authentication)")
       .and()
       .apply(new JwtSecurityConfig(tokenProvider))
       .and()
@@ -61,8 +65,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public AuthenticationEntryPoint authenticationEntryPoint(){
-    return new RosalindAuthenticationEntryPoint();
+    return new RosalindAuthenticationEntryPoint(messageService);
   }
 
+  @Bean
+  public AccessDeniedHandler accessDeniedHandler() {
+    return new RosalindAccessDeniedHandler(messageService);
+  }
 
 }

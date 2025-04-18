@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TshirtitiHelloController {
 
-  @GetMapping("/hello-tshirtiti")
+  @GetMapping("/hello/tshirtiti")
   public String hello() {
     return "Hello World! - TSHIRTITI";
   }

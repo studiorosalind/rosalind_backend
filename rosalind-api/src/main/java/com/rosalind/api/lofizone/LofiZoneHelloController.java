@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LofiZoneHelloController {
 
-  @GetMapping("/hello-lofi")
+  @GetMapping("/hello/lofi")
   public String hello() {
     return "Hello World! - LOFI ZONE";
   }
