@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.security.Key;
 
-@ComponentScan
 @Configuration
 public class AuthConfig {
 

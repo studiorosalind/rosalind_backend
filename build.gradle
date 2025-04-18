@@ -8,10 +8,10 @@ buildscript {
     ext {
         javaVersion="11"
         javaEncoding="UTF-8"
-        springCloudVersion="2021.0.5"
-        springBootVersion="2.7.15"
-        dependencyManagementVersion='1.0.11.RELEASE'
+        springCloudVersion="2020.0.5"
+        springBootVersion="2.5.12"
         queryDslPluginVersion="1.0.10"
+        dependencyManagementVersion='1.0.11.RELEASE'
         queryDslVersion='4.4.0'
         jibGradlePluginVersion="3.1.4"
     }
@@ -73,17 +73,12 @@ subprojects {
     dependencies {
         implementation 'org.codehaus.groovy:groovy-all:3.0.9'
         implementation 'cglib:cglib-nodep:3.2.4'
-        implementation "org.projectlombok:lombok:1.18.20"
-        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+        implementation "org.projectlombok:lombok:1.18.8"
+        annotationProcessor 'org.projectlombok:lombok:1.18.8'
         implementation group: 'commons-codec', name: 'commons-codec', version: '1.13'
-        implementation 'net.javacrumbs.shedlock:shedlock-spring:4.14.0'
-        implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:4.14.0'
 
         // slack - boot 간 버전충돌
         implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 
-        testImplementation 'junit:junit:4.12'
-        testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
-        testImplementation 'org.spockframework:spock-spring:2.3-groovy-3.0'
     }
 }

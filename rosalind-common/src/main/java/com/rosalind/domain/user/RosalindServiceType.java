@@ -1,4 +1,4 @@
-package com.rosalind.domain.rosalind;
+package com.rosalind.domain.user;
 
 public enum RosalindServiceType {
   LOFI,

@@ -16,4 +16,7 @@ public enum ErrorCode {
   private final String exceptionMessage;
   private final String messageKey;
 
+  public static ErrorCode of(String name) {
+    return ErrorCode.valueOf(name.toUpperCase());
   }
+}

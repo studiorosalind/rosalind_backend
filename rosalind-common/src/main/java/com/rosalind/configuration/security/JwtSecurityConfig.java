@@ -9,15 +9,19 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
 
   private final TokenProvider tokenProvider;
   private final RosalindAuthenticationProvider authenticationProvider;
+  private final MessageService messageService;
 
   public void configure(HttpSecurity http) {
-    JwtFilter customFilter = new JwtFilter(tokenProvider, authenticationProvider);
+    JwtFilter customFilter = new JwtFilter(messageService, tokenProvider, authenticationProvider);
     http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
   }
 
-  public JwtSecurityConfig(final TokenProvider tokenProvider, final RosalindAuthenticationProvider authenticationProvider) {
+  public JwtSecurityConfig(final TokenProvider tokenProvider,
+                           final RosalindAuthenticationProvider authenticationProvider,
+                           final MessageService messageService) {
     this.tokenProvider = tokenProvider;
     this.authenticationProvider = authenticationProvider;
+    this.messageService = messageService;
   }
 
 }

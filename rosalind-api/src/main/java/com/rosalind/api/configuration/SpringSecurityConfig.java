@@ -14,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+import static com.rosalind.common.constant.Constants.publicPathAntPatterns;
+
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +26,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final MessageService messageService;
   private final TokenProvider tokenProvider;
+  private final RosalindAuthenticationProvider authenticationProvider;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -43,21 +46,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
       .and()
       .authorizeRequests()
       .antMatchers(HttpMethod.OPTIONS).permitAll()
-      .antMatchers(
-        "/v3/api-docs/**",
-        "/swagger-ui/**",
-        "/swagger-ui.html",
-        "/static/index.html",
-        "/index.html"
-      ).permitAll()
-      .antMatchers(
-        "/error**",
-        "/hello/**",
-        "/actuator/**"
-      ).permitAll()
+      .antMatchers(publicPathAntPatterns).permitAll()
       .anyRequest().access("@rosalindAuthorizationChecker.check(request, authentication)")
       .and()
-      .apply(new JwtSecurityConfig(tokenProvider))
+      .apply(new JwtSecurityConfig(tokenProvider, authenticationProvider, messageService))
       .and()
       .formLogin().disable()
     ;

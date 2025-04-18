@@ -1,5 +1,6 @@
 package com.rosalind.configuration.security;
 
+import com.rosalind.domain.user.RosalindUser;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,10 +22,21 @@ public class RosalindAuthentication implements Authentication {
   private boolean authenticated;
   private Collection<? extends GrantedAuthority> authorities;
 
+  public static RosalindAuthentication fromRosalindUser(RosalindUser rosalindUser) {
+    return RosalindAuthentication.builder()
+      .principal(RosalindUserPrincipal.from(rosalindUser))
+      .build();
+  }
+
   @Override
   public String getName() {
     Optional<Object> principal = Optional.ofNullable(this.principal);
 
-    return ;
+    if (principal.isPresent()) {
+      RosalindUserPrincipal rosalindPrincipal = (RosalindUserPrincipal) principal.get();
+      return rosalindPrincipal.getUserName();
+    }
+
+    return null;
   }
 }
