@@ -15,6 +15,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableAsync(proxyTargetClass = true)
 @Import({
   PostgresqlConfig.class,
+  I18nConfig.class,
 })
 @ComponentScan(basePackages = {"com.rosalind"})
 public class RosalindCommonConfig implements AsyncConfigurer {

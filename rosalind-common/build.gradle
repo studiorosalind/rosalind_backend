@@ -16,49 +16,58 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
-//    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-//    implementation('org.springframework.cloud:spring-cloud-starter-bootstrap')
-
-    // spring common
-    compile "org.springframework.boot:spring-boot-starter-web"
-    compile "org.springframework.boot:spring-boot-starter-webflux"
-    compile "org.springframework.boot:spring-boot-starter-jdbc"
-    compile "org.springframework.boot:spring-boot-starter-security"
-    compile "org.springframework.boot:spring-boot-starter-mail"
-
-    // spring persistence
-    compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "com.querydsl:querydsl-core:${queryDslVersion}"
-    compile "com.querydsl:querydsl-jpa:${queryDslVersion}"
-    compile "com.querydsl:querydsl-apt:${queryDslVersion}"
-    compile "com.querydsl:querydsl-sql-spatial:${queryDslVersion}"
-
+    // Spring Boot Starters
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-mail"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    
+    // Spring Framework
+    implementation 'org.springframework:spring-tx'
+    
+    // QueryDSL
+    implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-sql-spatial:${queryDslVersion}"
+    
+    // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
-
-    // persistence
-    compile 'org.postgresql:postgresql'
-
-    // aws
-    compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.675'
-    compile group: 'com.amazonaws', name: 'aws-java-sdk-sts', version: '1.11.675'
-
-    // Slack
-    compile group: 'com.slack.api', name: 'slack-api-client', version: '1.26.1'
-
-    // common utils
-    compile 'com.google.guava:guava:22.0'
-    compile 'org.apache.commons:commons-lang3:3.9'
-    compile group: 'org.apache.commons', name: 'commons-text', version: '1.8'
-    compile 'commons-fileupload:commons-fileupload:1.4'
-
-    implementation 'com.google.firebase:firebase-admin:9.1.1'
-
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
-
+    
+    // Database
+    implementation 'org.postgresql:postgresql'
+    implementation 'com.zaxxer:HikariCP'
+    
+    // AWS
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.675'
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-sts', version: '1.11.675'
     implementation 'software.amazon.awssdk:rekognition:2.17.230'
+    
+    // Slack - using a compatible version
+    implementation group: 'com.slack.api', name: 'slack-api-client', version: '1.26.1'
+    
+    // Common Utils
+    implementation 'com.google.guava:guava:22.0'
+    implementation 'org.apache.commons:commons-lang3:3.9'
+    implementation group: 'org.apache.commons', name: 'commons-text', version: '1.8'
+    implementation 'commons-fileupload:commons-fileupload:1.4'
+    
+    // Firebase
+    implementation 'com.google.firebase:firebase-admin:9.1.1'
+    
+    // Servlet API
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    
+    // JPA API
+    implementation 'javax.persistence:javax.persistence-api:2.2'
 }
 
 test {

@@ -35,12 +35,13 @@ spring:
             non_contextual_creation: true
     open-in-view: false
 
-  messages:
-    basename: messages/error/messages
-    encoding: UTF-8
-    fallback-to-system-locale: false
-    always-use-message-format: true
-    use-code-as-default-message: false
+  # Messages configuration moved to I18nConfig.java
+  # messages:
+  #   basename: messages/error/messages
+  #   encoding: UTF-8
+  #   fallback-to-system-locale: false
+  #   always-use-message-format: true
+  #   use-code-as-default-message: false
 
 jwt:
   secret: 35e04c05f10c3f7e044e053a6c523e820d3411ad298fc31e61663806a5492d1ddc1ee223979cc73991e0b9d86ac36b7d645f67eb48020ec003260125160c9c16
