@@ -39,13 +39,14 @@ public class OAuth2Controller {
   private static final String GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
   private static final String GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
   private static final String GOOGLE_CLIENT_ID = "301970471696-1cmcjem1vu5c87ktmrva224s74us7mae.apps.googleusercontent.com";
-  private static final String GOOGLE_CLIENT_SECRET = "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";
+  private static final String GOOGLE_CLIENT_SECRE = "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";
   private static final String REDIRECT_URI_COOKIE_NAME = "oauth2_redirect_uri";
   private static final String ORIGINAL_URL_COOKIE_NAME = "oauth2_original_url";
 
   private final RestTemplate restTemplate;
   private final ObjectMapper objectMapper;
   private final RosalindUserService rosalindUserService;
+
   private final TokenProvider tokenProvider;
 
   @GetMapping("/oauth2/{serviceType}/{provider}/redirect")
@@ -211,7 +212,7 @@ public class OAuth2Controller {
     MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
     body.add("code", code);
     body.add("client_id", GOOGLE_CLIENT_ID);
-    body.add("client_secret", GOOGLE_CLIENT_SECRET);
+    body.add("client_secret", GOOGLE_CLIENT_SECRE);
     body.add("redirect_uri", redirectUri);
     body.add("grant_type", "authorization_code");
     
