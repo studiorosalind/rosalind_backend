@@ -9,6 +9,7 @@ CREATE TABLE rosalind_user (
     provider_code varchar(50),
     provider_id varchar(255),
     user_uuid varchar(512),
+    user_name varchar(50),
     email varchar(255),
     profile_url varchar(512),
     created_at bigint NOT NULL,

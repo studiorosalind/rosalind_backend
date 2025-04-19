@@ -11,7 +11,8 @@ public final class Constants {
     "/swagger-ui/**",
     "/swagger-ui.html",
     "/static/index.html",
-    "/index.html", "/favicon.ico"
+    "/index.html", "/favicon.ico",
+    "/oauth2/**"
   };
 
   public static final class Auth {
